@@ -1,0 +1,24 @@
+.root-container{
+  margin: 0 auto;
+  background-color: white;
+  width: 95%;
+  border-radius: 10px;
+}
+.head-container{
+  font-size: large;
+}
+.head{
+  font-weight: bold;
+  color: #ff8a00;
+}
+.gpu-container{
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+.custom-container>span{
+  padding: 0 10px 0 0;
+}
+.select{
+  width: 150px;
+}

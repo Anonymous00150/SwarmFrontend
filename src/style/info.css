@@ -1,0 +1,22 @@
+.avatar-container{
+  
+}
+.avatar-container>div{
+  padding-left: 20px;
+}
+.card{
+  padding-left: 40px;
+  padding-right: 40px;
+  position: relative;
+}
+.card div{
+  margin-bottom: 10px;
+}
+.floater{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.Modi-button{
+  width: 100px;
+}
