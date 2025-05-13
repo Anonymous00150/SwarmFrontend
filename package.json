@@ -66,6 +66,7 @@
     "path-browserify": "^1.0.1",
     "pinia": "^2.3.0",
     "pinyin-pro": "^3.26.0",
+    "pure-admin-thin": "link:",
     "qs": "^6.13.1",
     "relation-graph": "^2.2.11",
     "relation-graph-vue3": "^2.2.11",

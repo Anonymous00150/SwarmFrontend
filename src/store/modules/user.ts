@@ -84,7 +84,9 @@ export const useUserStore = defineStore({
         getModifiedLogin(data)
           .then(data => {
             if (data?.message === "登录成功") {
-              setToken(data.data);
+              console.log("出现data");
+              console.log(data);
+              setToken(data.token);
             }
             resolve(data);
           })
@@ -206,20 +208,20 @@ export const useUserStore = defineStore({
       router.push("/login");
     },
     /** 刷新`token` */
-    async handRefreshToken(data) {
-      return new Promise<RefreshTokenResult>((resolve, reject) => {
-        refreshTokenApi(data)
-          .then(data => {
-            if (data) {
-              setToken(data.data);
-              resolve(data);
-            }
-          })
-          .catch(error => {
-            reject(error);
-          });
-      });
-    },
+    // async handRefreshToken(data) {
+    //   return new Promise<RefreshTokenResult>((resolve, reject) => {
+    //     refreshTokenApi(data)
+    //       .then(data => {
+    //         if (data) {
+    //           setToken(data.token);
+    //           resolve(data);
+    //         }
+    //       })
+    //       .catch(error => {
+    //         reject(error);
+    //       });
+    //   });
+    // },
     //直接删除token,不存在refreshToken
     deleteToken() {
 

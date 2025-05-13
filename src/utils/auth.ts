@@ -36,6 +36,7 @@ export const multipleTabsKey = "multiple-tabs";
 /** 获取`token` */
 export function getToken(): DataInfo<number> {
   // 此处与`TokenKey`相同，此写法解决初始化时`Cookies`中不存在`TokenKey`报错
+  console.log('token key:' + Cookies.get(TokenKey));
   return Cookies.get(TokenKey)
     ? JSON.parse(Cookies.get(TokenKey))
     : storageLocal().getItem(userKey);
@@ -47,13 +48,13 @@ export function getToken(): DataInfo<number> {
  * 将`accessToken`、`expires`、`refreshToken`这三条信息放在key值为authorized-token的cookie里（过期自动销毁）
  * 将`avatar`、`username`、`nickname`、`roles`、`permissions`、`refreshToken`、`expires`这七条信息放在key值为`user-info`的localStorage里（利用`multipleTabsKey`当浏览器完全关闭后自动销毁）
  */
-export function setToken(data: DataInfo<Date>) {
+export function setToken(token: string) {
   let expires = 0;
-  const { accessToken, token } = data;
+
   const { isRemembered, loginDay } = useUserStoreHook();
   expires = Date.now() + 50 * 24 * 60 * 60 * 1000;
-
-  const cookieString = JSON.stringify({ accessToken, expires, token });
+  //const cookieString = JSON.stringify({ accessToken, expires, token });
+  const cookieString = JSON.stringify({ expires, token });
 
   expires > 0
     ? Cookies.set(TokenKey, cookieString, {
@@ -88,34 +89,34 @@ export function setToken(data: DataInfo<Date>) {
     });
   }
 
-  if (data.username && data.roles) {
-    const { username, roles } = data;
-    setUserKey({
-      avatar: data?.avatar ?? "",
-      username,
-      nickname: data?.nickname ?? "",
-      roles,
-      permissions: data?.permissions ?? []
-    });
-  } else {
-    const avatar =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.avatar ?? "";
-    const username =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.username ?? "";
-    const nickname =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.nickname ?? "";
-    const roles =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.roles ?? [];
-    const permissions =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.permissions ?? [];
-    setUserKey({
-      avatar,
-      username,
-      nickname,
-      roles,
-      permissions
-    });
-  }
+  // if (data.username && data.roles) {
+  //   const { username, roles } = data;
+  //   setUserKey({
+  //     avatar: data?.avatar ?? "",
+  //     username,
+  //     nickname: data?.nickname ?? "",
+  //     roles,
+  //     permissions: data?.permissions ?? []
+  //   });
+  // } else {
+  //   const avatar =
+  //     storageLocal().getItem<DataInfo<number>>(userKey)?.avatar ?? "";
+  //   const username =
+  //     storageLocal().getItem<DataInfo<number>>(userKey)?.username ?? "";
+  //   const nickname =
+  //     storageLocal().getItem<DataInfo<number>>(userKey)?.nickname ?? "";
+  //   const roles =
+  //     storageLocal().getItem<DataInfo<number>>(userKey)?.roles ?? [];
+  //   const permissions =
+  //     storageLocal().getItem<DataInfo<number>>(userKey)?.permissions ?? [];
+  //   setUserKey({
+  //     avatar,
+  //     username,
+  //     nickname,
+  //     roles,
+  //     permissions
+  //   });
+  // }
 }
 
 
@@ -128,7 +129,7 @@ export function removeToken() {
 
 /** 格式化token（jwt格式） */
 export const formatToken = (token: string): string => {
-  return "Bearer " + token;
+  return token;
 };
 
 /** 是否有按钮级别的权限（根据登录接口返回的`permissions`字段进行判断）*/

@@ -56,6 +56,7 @@ class PureHttp {
     return new Promise(resolve => {
       PureHttp.requests.push((token: string) => {
         config.headers["Authorization"] = formatToken(token);
+        console.log('token:' + token);
         resolve(config);
       });
     });
@@ -77,7 +78,7 @@ class PureHttp {
           return config;
         }
         /** 请求白名单，放置一些不需要`token`的接口（通过设置请求白名单，防止`token`过期后再请求造成的死循环问题） */
-        const whiteList = ["/refresh-token", "/login"];
+        const whiteList = ["/refresh-token", "/login", "/welcome"];
         return whiteList.some(url => config.url.endsWith(url))
           ? config
           : new Promise(resolve => {
@@ -111,8 +112,10 @@ class PureHttp {
                 /*config.headers["Authorization"] = formatToken(
                   data.accessToken
                 );*/
+                //config.headers["Authorization"] = `Bearer ${data.token}`
                 //重写
-                config.headers["Authorization"] = `Bearer ${data.token}`
+                console.log(config);
+                config.headers["Authorization"] = `${data.token}`
                 resolve(config);
               }
             } else {

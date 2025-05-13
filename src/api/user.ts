@@ -159,7 +159,7 @@ export const getLogin = (data?: object) => {
 };
 
 export const getModifiedLogin = (data?: { username: string; password: string }) => {
-  return http.request<UserResult>("post", baseUrlApi(`/users/login?username=${data.username}&password=${data.password}`), { data });
+  return http.request<UserResult>("get", baseUrlApi(`/login?username=${data.username}&password=${data.password}`), { data });
 };
 
 export const getModifiedRegister = (data?: { username: string; password: string; email: string; phone: string }) => {
